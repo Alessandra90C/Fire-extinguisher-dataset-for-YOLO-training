@@ -8,6 +8,7 @@ The following ones are all the necessary requirements [AlexeyAB, 2019]:
 5. cuDNN >= 7.0;
 6. GPU with CC >= 3.0;
 7. on Linux GCC or Clang, on Windows MSVC 2015/2017/2019.
+
 Since this project involves the use of YOLO neural network it has been decided
 to use the training platform advised by the developer of the network itself:
 Darknet-19 [Shinde et al., 2018]. Darknet is an open source neural network
@@ -29,6 +30,7 @@ following procedure:
 3. set x64 and Release
 4. Include cudnn.lib in your Visual Studio project
 5. Build > Build darknet.
+
 At this moment the darknet.exe is generated inside the folder.
 Finally darknet needs to be prepared for using OpenCV, CUDA and cuDNN.
 The bin file has to be placed in the same folder of darknet.exe. Bin
@@ -62,16 +64,20 @@ There are some files to set before starting the process:
 2. the .data file
 3. the .names file
 4. the .weights file
+
 As far as the .cfg file is concerned some parameters have to been taken into
 consideration for training a customized network. The parameters to check are
 [Tijtgat, 2017] [AlexeyAB, 2019]:
 1. batch = 64, this means we will be using 64 images for every training step;
 2. subdivision = 8, the batch will be divided by 8 to decrease GPU VRAM
 requirements. If you have a powerful GPU with loads of VRAM, this
-number can be decreased, or batch could be increased. The training step
+number can be decreased, or batch could be increased. 
+
+The training step
 will throw a CUDA out of memory error so you can adjust accordingly;
 1. classes = 1, the number of categories we want to detect;
 2. filters = (classes + 5)*5.
+
 The .data file is the file that the software reads to train the network. It contains
 all the paths to the other necessary files for the training process.
 The classes parameter is the number of different objects for the training
@@ -99,6 +105,7 @@ loss function only penalizes classification error if an object is present in tha
 cell. It also penalizes bounding box coordinate error only if that predictor is
 “responsible” for the ground truth box (i.e. has the highest IOU of any predictor
 in that grid cell).
+
 The output of the training process therefore are:
 1. the chart with the mAP progress in red and the Avg progress in blue;
 2. the log file with all the operations executed to train the network, it contains the report of all the epoch, with the avg and mAP
